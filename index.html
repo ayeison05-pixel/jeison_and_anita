@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anita Bonita!</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#240028">
+  
+  <style>
+    p {
+      color: #240028;
+      text-align: center;
+      font-size: 45px;
+    }
+  
+    body {
+      align-items: center;
+      background: snow;
+      color: #240028;
+      padding: 5%;
+      font-family: sans-serif;
+    }
+    
+    h1 {
+      box-shadow: 0.5px 0.5px 2.5px rgba(0,0,0,0.5);
+      text-shadow: 0.3px 0.3px 2px rgba(3,0,40,0.5);
+      border: #240028 2.5px solid;
+      height: 10vh auto;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      text-align: center;
+      background: #FFF4FF;
+      padding: 0;
+      font-size: 5rem;
+      border-radius: 10px;
+    }
+
+    #visor {
+      margin: 20px auto;
+      text-align: center;
+      padding: 20px;
+      border: 3px solid #240028;
+      border-radius: 2px;
+      width: 90%;
+      background: #fff4ff;
+      min-height: 200px;
+    }
+
+    /* ---------------------------------------------------
+       REPRODUCTOR DE VIDEO PERSONALIZADO
+       --------------------------------------------------- */
+    .video-container {
+      width: 300px;
+      margin: 0 auto;
+      position: relative;
+      
+    }
+
+    video {
+      border: 2.5px solid black;
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      overflow: hidden;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(36,0,40,0.5);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #240028;
+      padding: 10px;
+      border-radius: 15px;
+      margin-top: 10px;
+    }
+
+    #playBtn {
+      background: #D8BFD8;
+      color: #240028;
+      border: none;
+      font-size: 1.4rem;
+      padding: 5px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #playBtn:hover {
+      opacity: 0.8;
+    }
+
+    #progress {
+      flex: 1;
+      appearance: none;
+      height: 8px;
+      background: #D8BFD8;
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    #progress::-webkit-slider-thumb {
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      background: #fff;
+      border: 2px solid #240028;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>tnt belle-</h1>
+
+<div id="visor">
+
+  <!-- SOLO VIDEO -->
+  <div class="video-container">
+    <video id="video" poster="media/miniatura.jpg">
+      <source src="media/video1.mp4" type="video/mp4">
+    </video>
+
+    <div class="controls">
+      <button id="playBtn"><i id="playIcon" class="fa-solid fa-play"></i></button>
+      <input type="range" id="progress" value="0">
+    </div>
+  </div>
+
+</div> 
+  
+  <p> toda tú me gustas!
+    
+    
+    
+  </p>
+
+<script>
+ if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+ }
+
+ // CONTROL DEL REPRODUCTOR
+ const video = document.getElementById("video");
+ const playBtn = document.getElementById("playBtn");
+ const progress = document.getElementById("progress");
+
+ // PLAY/PAUSA
+ const playIcon = document.getElementById("playIcon");
+
+playBtn.addEventListener("click", () => {
+  if (video.paused) {
+    video.play();
+    playIcon.classList.remove("fa-play");
+    playIcon.classList.add("fa-pause");
+  } else {
+    video.pause();
+    playIcon.classList.remove("fa-pause");
+    playIcon.classList.add("fa-play");
+  }
+});
+
+ // BARRA DE PROGRESO
+ video.addEventListener("timeupdate", () => {
+   const porcentaje = (video.currentTime / video.duration) * 100;
+   progress.value = porcentaje;
+ });
+
+ // SALTO EN LA BARRA
+ progress.addEventListener("input", () => {
+   const nuevoTiempo = (progress.value / 100) * video.duration;
+   video.currentTime = nuevoTiempo;
+ });
+  
+  
+</script>
+
+</body>
+</html>
